@@ -157,7 +157,7 @@ src/app/
 ---
 
 ## 10) Notas finales
-- Revisa que las versiones de **PrimeNG/PrimeIcons/PrimeFlex** sean compatibles con Angular 16 (ej.: `primeng@^16`).
-- Ajusta `apiBaseUrl` al puerto real del backend (Swagger te muestra las URLs).
+- Revisar que las versiones de **PrimeNG/PrimeIcons/PrimeFlex** sean compatibles con Angular 16 (ej.: `primeng@^16`).
+- Ajustar `apiBaseUrl` al puerto real del backend (Swagger muestra las URLs).
 
 ---
