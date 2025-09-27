@@ -1,0 +1,8 @@
+<div class="p-3" *ngIf="p as r">
+  <h3>{{ r.firstName }} {{ r.lastName }}</h3>
+  <p><b>Documento:</b> {{ r.documentType }}-{{ r.documentNumber }}</p>
+  <p><b>Nacimiento:</b> {{ r.birthDate }}</p>
+  <p><b>Teléfono:</b> {{ r.phoneNumber || '-' }}</p>
+  <p><b>Email:</b> {{ r.email || '-' }}</p>
+  <p><b>Creado:</b> {{ r.createdAt | date:'yyyy-MM-dd HH:mm' }}</p>
+</div>

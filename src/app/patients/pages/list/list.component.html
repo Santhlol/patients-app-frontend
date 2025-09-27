@@ -1,0 +1,64 @@
+<div class="p-3">
+  <div class="flex gap-2 mb-3">
+    <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input pInputText placeholder="Buscar por nombre..." [(ngModel)]="name" (ngModelChange)="onSearchChange()">
+    </span>
+    <input pInputText placeholder="Documento..." [(ngModel)]="documentNumber" (ngModelChange)="onSearchChange()">
+    <a routerLink="new" pButton label="Nuevo" icon="pi pi-plus"></a>
+    <button pButton label="Exportar" icon="pi pi-download" (click)="openExport()"></button>
+  </div>
+
+  <p-dialog [(visible)]="exportDialog" [modal]="true" [closable]="true" header="Exportar pacientes">
+    <div class="flex flex-column gap-3">
+      <div>
+        <label class="block mb-1">Desde fecha (incluida)</label>
+        <input pInputText type="date" [(ngModel)]="exportDate">
+      </div>
+      <div class="flex gap-2 justify-end">
+        <button pButton label="CSV" icon="pi pi-file" (click)="doExportCsv()" [disabled]="!exportDate"></button>
+        <button pButton label="Excel" icon="pi pi-file-excel" (click)="doExportXlsx()" [disabled]="!exportDate"></button>
+      </div>
+    </div>
+  </p-dialog>
+
+  <p-table [value]="rows"
+           [lazy]="true"
+           [paginator]="true"
+           [rows]="pageSize"
+           [totalRecords]="total"
+           (onLazyLoad)="load($event)"
+           [loading]="loading"
+           dataKey="patientId"
+           [rowsPerPageOptions]="[5,10,20]">
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Documento</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Email</th>
+        <th>Teléfono</th>
+        <th>Creado</th>
+        <th style="width: 140px;"></th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-r>
+      <tr>
+        <td>{{ r.documentType }}-{{ r.documentNumber }}</td>
+        <td>{{ r.firstName }}</td>
+        <td>{{ r.lastName }}</td>
+        <td>{{ r.email || '-' }}</td>
+        <td>{{ r.phoneNumber || '-' }}</td>
+        <td>{{ r.createdAt | date:'yyyy-MM-dd HH:mm' }}</td>
+        <td class="flex gap-2">
+          <a [routerLink]="[r.patientId]" pButton icon="pi pi-eye" label="Ver" class="p-button-text"></a>
+          <a [routerLink]="[r.patientId, 'edit']" pButton icon="pi pi-pencil" class="p-button-text"></a>
+          <button pButton (click)="delete(r)" icon="pi pi-trash" class="p-button-text p-button-danger"></button>
+        </td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+</div>

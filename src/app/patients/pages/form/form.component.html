@@ -1,0 +1,45 @@
+<div class="p-3 max-w-30rem">
+  <h3 class="mb-3">{{ id ? 'Editar paciente' : 'Nuevo paciente' }}</h3>
+
+  <form [formGroup]="form" (ngSubmit)="save()" class="flex flex-column gap-3">
+    <div class="flex gap-2">
+      <div class="w-6">
+        <p-dropdown
+          formControlName="documentType"
+          [options]="documentTypeOptions"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Tipo de documento"
+          [filter]="true"
+          [showClear]="true"
+          appendTo="body"
+          [style]="{ width: '100%' }">
+        </p-dropdown>
+
+        <small class="p-error"
+               *ngIf="form.get('documentType')?.touched && form.get('documentType')?.hasError('required')">
+          El tipo de documento es obligatorio
+        </small>
+      </div>
+
+      <input pInputText placeholder="Número" formControlName="documentNumber" class="w-6">
+    </div>
+
+    <div class="flex gap-2">
+      <input pInputText placeholder="Nombre" formControlName="firstName" class="w-6">
+      <input pInputText placeholder="Apellido" formControlName="lastName" class="w-6">
+    </div>
+
+    <div class="flex gap-2">
+      <input pInputText type="date" formControlName="birthDate" class="w-6">
+      <input pInputText placeholder="Teléfono" formControlName="phoneNumber" class="w-6">
+    </div>
+
+    <input pInputText placeholder="Email" formControlName="email">
+
+    <div class="flex gap-2">
+      <button pButton type="submit" label="Guardar" [disabled]="loading || form.invalid"></button>
+      <a pButton label="Cancelar" class="p-button-secondary" routerLink="/patients"></a>
+    </div>
+  </form>
+</div>

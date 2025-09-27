@@ -1,29 +1,37 @@
+// src/app/app.component.spec.ts
 import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { Component } from '@angular/core';
 import { AppComponent } from './app.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { MessageService, ConfirmationService } from 'primeng/api';
+
+@Component({ template: '' })
+class DummyPatientsComponent {}
 
 describe('AppComponent', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [RouterTestingModule],
-    declarations: [AppComponent]
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule.withRoutes([
+          { path: 'patients', component: DummyPatientsComponent },
+          { path: '', pathMatch: 'full', redirectTo: 'patients' },
+          { path: '**', redirectTo: 'patients' },
+        ]),
+        BrowserAnimationsModule,
+        ToastModule,
+        ConfirmDialogModule,
+      ],
+      declarations: [AppComponent, DummyPatientsComponent],
+      providers: [MessageService, ConfirmationService],
+    }).compileComponents();
+  });
 
-  it('should create the app', () => {
+  it('debería crear la app', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'patients-app'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('patients-app');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('patients-app app is running!');
   });
 });
